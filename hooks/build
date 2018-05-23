@@ -1,0 +1,2 @@
+#!/bin/bash
+docker build --build-arg SUPERSET_VERSION=${DOCKER_TAG:1} -t $IMAGE_NAME .
