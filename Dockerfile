@@ -36,8 +36,7 @@ COPY superset_config.py /etc/superset
 COPY entry_point.sh $SUPERSET_HOME
 COPY superset_version $SUPERSET_HOME
 
-
-RUN pip3 install --no-cache-dir superset==`cat superset_version`
+RUN pip3 install git+https://github.com/apache/incubator-superset.git@`cat superset_version`
 
 EXPOSE 8088
 ENTRYPOINT ["/home/superset/entry_point.sh"]
