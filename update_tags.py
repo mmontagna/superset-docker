@@ -32,6 +32,9 @@ for tag in new_tags:
         ['git', '-C', args.superset_docker_dir, 'commit', '-m', 'Bump to {}'.format(new_tag)])
 
     print subprocess.check_output(
+        ['git', '-C', args.superset_docker_dir, 'push'])
+
+    print subprocess.check_output(
         ['git', '-C', args.superset_docker_dir, 'tag', new_tag])
 
     print subprocess.check_output(
