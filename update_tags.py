@@ -21,6 +21,10 @@ target_tags = filter(lambda x: x, subprocess.check_output(['git', '-C', args.sup
 new_tags = list(set(source_tags) - set(target_tags))
 new_tags.sort(key=LooseVersion)
 
+print source_tags
+print 'aaaaaaaaaaaaaaaaaa'
+print target_tags
+
 for tag in new_tags:
     new_tag = "v{}".format(tag)
     with open('superset_version', 'wb') as f:
