@@ -17,6 +17,7 @@ subprocess.check_output(['git', '-C', args.superset_docker_dir, 'pull'])
 source_tags = filter(lambda x: x and x[0].isdigit(), subprocess.check_output(['git', '-C', args.superset_dir, 'tag']).split("\n"))
 
 target_tags = filter(lambda x: x, subprocess.check_output(['git', '-C', args.superset_docker_dir, 'tag']).split("\n"))
+target_tags = ['v'+x for x in target_tags]
 
 new_tags = list(set(source_tags) - set(target_tags))
 new_tags.sort(key=LooseVersion)
