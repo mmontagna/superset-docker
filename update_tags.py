@@ -17,17 +17,14 @@ subprocess.check_output(['git', '-C', args.superset_docker_dir, 'pull'])
 source_tags = filter(lambda x: x and x[0].isdigit(), subprocess.check_output(['git', '-C', args.superset_dir, 'tag']).split("\n"))
 
 target_tags = filter(lambda x: x, subprocess.check_output(['git', '-C', args.superset_docker_dir, 'tag']).split("\n"))
-target_tags = ['v'+x for x in target_tags]
 
-new_tags = list(set(source_tags) - set(target_tags))
-new_tags.sort(key=LooseVersion)
+source_tags.sort(key=LooseVersion)
 
-print source_tags
-print 'aaaaaaaaaaaaaaaaaa'
-print target_tags
-
-for tag in new_tags:
+for tag in source_tags:
     new_tag = "v{}".format(tag)
+    if new_tag in target_tags:
+        continue
+
     with open('superset_version', 'wb') as f:
         f.write(new_tag.lstrip('v'))
 
