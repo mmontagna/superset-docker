@@ -15,6 +15,7 @@ RUN useradd -U -m superset && \
     chown -R superset:superset ${SUPERSET_HOME} && \
     apt-get update && \
     apt-get install -y \
+        git \
         build-essential \
         curl \
         default-libmysqlclient-dev \
@@ -24,19 +25,19 @@ RUN useradd -U -m superset && \
         libsasl2-dev \
         libssl-dev \
         openjdk-8-jdk \
-        python3-dev \
-        python3-pip && \
+        python-dev \
+        python-pip && \
     apt-get clean && \
     rm -r /var/lib/apt/lists/*
 
 COPY requirements.txt $SUPERSET_HOME
-RUN pip3 install --no-cache-dir -r $SUPERSET_HOME/requirements.txt
+RUN pip install --no-cache-dir -r $SUPERSET_HOME/requirements.txt
 
 COPY superset_config.py /etc/superset
 COPY entry_point.sh $SUPERSET_HOME
 COPY superset_version $SUPERSET_HOME
 
-RUN pip3 install git+https://github.com/apache/incubator-superset.git@`cat superset_version`
+RUN pip install git+https://github.com/apache/incubator-superset.git@`cat superset_version`
 
 EXPOSE 8088
 ENTRYPOINT ["/home/superset/entry_point.sh"]
